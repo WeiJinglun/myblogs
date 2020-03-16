@@ -47,7 +47,7 @@ static int hash(int h) {
 
 相比于之前的版本，jdk1.8在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间。
 
-<img src="./img/jdk1.8之后的内部结构.jpg" alt="JDK1.8之后的HashMap底层数据结构" style="zoom:67%;" />
+![jdk1.8之后的内部结构](./img/jdk1.8之后的内部结构.jpg)
 
 **类的属性：**
 
@@ -221,11 +221,11 @@ HashMap中的`hash()`函数是将得到hashcode做进一步处理，它将hashco
 
 综上所述：从hashcode计算得到table索引的计算过程如下所示：
 
-<img src="./img/hash过程.png" alt="hash过程" style="zoom:67%;" />
+![hash过程](./img/hash过程.png)
 
 `put()`方法的执行过程如下所示：
 
-[![hash-put](./img/hash-put.png)
+![hash-put](./img/hash-put.png)
 
 ## HashMap的扩容机制
 
@@ -327,15 +327,15 @@ final float loadFactor;
 
 其实很简单，由于我们在扩容时，是使用2的幂扩展，即数组的长度扩大到原来的2倍, 4倍, 8倍…，因此在resize时(Length - 1)这部分相当于在高位新增一个或多个1bit，我们以扩大到原来的两倍为例说明：
 
-[![rehash1](./img/rehash1.png)
+![rehash1](./img/rehash1.png)
 
 (a)中n为16，(b)中n扩大到两倍为32，相当于(n - 1)这部分的高位多了一个1, 然后和原hash码作与操作，这样元素在数组中映射的位置要么不变，要不向后移动16个位置：
 
-[![rehash2](./img/rehash2.png)
+![rehash2](./img/rehash2.png)
 
 因此，我们在扩充HashMap的时候，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap”，可以看看下图为16扩充为32的resize示意图：
 
-[![rehash3](./img/rehash3.png)
+![rehash3](./img/rehash3.png)
 
 这个设计确实非常的巧妙，既省去了重新计算hash值的时间，而且同时，由于新增的1bit是0还是1可以认为是随机的，因此resize的过程，均匀的把之前的冲突的节点分散到新的bucket了。这一块就是JDK1.8新增的优化点。有一点注意区别，JDK1.7中resize的时候，旧链表迁移新链表的时候，如果在新表的数组索引位置相同，则链表元素会倒置，但是从上图可以看出，JDK1.8不会倒置。
 
@@ -382,7 +382,7 @@ newTable[i] = e         : newTable[i] = 1->3->2->1  //这时候链表换已经�
 
 Java为数据结构中的映射定义了一个接口java.util.Map，此接口主要有四个常用的实现类，分别是HashMap、Hashtable、LinkedHashMap和TreeMap，类继承关系如下图所示：
 
-[![hashmap继承关系](./img/hashmap继承关系.png)
+![hashmap继承关系](./img/hashmap继承关系.png)
 
 Hashtable：Hashtable是遗留类，很多映射的常用功能与HashMap类似，不同的是它承自Dictionary类，并且是线程安全的，任一时间只有一个线程能写Hashtable，并发性不如ConcurrentHashMap，因为ConcurrentHashMap引入了分段锁。Hashtable不建议在新代码中使用，不需要线程安全的场合可以用HashMap替换，需要线程安全的场合可以用ConcurrentHashMap替换。
 
