@@ -15,6 +15,11 @@ java个人学习总结
         - [JVM 内存管理](java/JVM/JVM%20内存管理.md)
         - [JVM 类的加载机制](java/JVM/JVM%20类的加载机制.md)
         - [JVM 字节码文件](java/JVM/JVM%20字节码文件.md)
+    - java 设计模式总结
+        - [设计原则与分类](java/java%20设计模式/设计模式的类型.md)
+        - [工厂模式](java/java%20设计模式/工厂模式.md)
+        - [抽象工厂模式](java/java%20设计模式/抽象工厂模式.md)
+        - [单例模式](java/java%20设计模式/单例模式.md)
 
     - [ArrayList源码学习](java/ArrayList源码学习.md)
     - [HashMap底层实现原理](java/HashMap底层实现原理.md)
