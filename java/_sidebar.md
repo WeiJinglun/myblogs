@@ -1,6 +1,6 @@
 - [返回首页](/README.md)
 - [JVM](/java/JVM/README.md)
-- [java 设计模式](/java/java%20设计模式/README.md)
+- [java 设计模式](/java/java设计模式/README.md)
 - java 基础
     - [ArrayList源码学习](/java/ArrayList源码学习.md)
     - [HashMap底层实现原理](/java/HashMap底层实现原理.md)
@@ -8,8 +8,8 @@
     - [LinkedList源码学习](/java/LinkedList源码学习.md)
     - [String学习总结](/java/String学习总结.md)
     - [单例模式](/java/单例模式.md)
-    - [final,static,this,super 关键字总结](/java/final,static,this,super%20关键字总结.md)
-    - [Integer与int深入理解](/java/Integer与int%20深入理解.md)
+    - [final,static,this,super 关键字总结](/java/final,static,this,super关键字总结.md)
+    - [Integer与int深入理解](/java/Integer与int深入理解.md)
     - [java多线程CompletableFuture](/java/java多线程CompletableFuture.md)
     - [JVM学习总结](/java/JVM/JVM学习总结.md)
     - [乐观锁与悲观锁](/java/乐观锁与悲观锁.md)

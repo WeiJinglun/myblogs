@@ -19,10 +19,8 @@
         name: '目录',
         repo: '/README.md',
         maxLevel: 3,// 最大支持渲染的标题层级
+        subMaxLevel:4,
         loadSidebar: true,//侧边栏,_sidebar.md
-        alias: { // 加载多级目录
-            './_sidebar.md': '/_sidebar.md'
-        },
         loadNavbar: true,// 导航栏,_navbar.md
         auto2top: true,// 切换页面后是否自动跳转到页面顶部
         coverpage: true,// 封面,_coverpage.md
@@ -31,21 +29,20 @@
             paths: 'auto',
             placeholder: '搜索',
             noData: '真的找不到了',
-            // 搜索标题的最大程级, 1 - 6
-            // depth:3,
         },
         markdown: {},
         Valine: {
             appId: 'uguzIWfw592DW8Si6ISRJg8x-gzGzoHsz',
             appKey: 'zCH7o0WXtdvMJ5k5M7cmwWTG',
             // 评论框占位提示符
-            placeholder:'留下你的小灵感',
+            placeholder: '留下你的小灵感',
             // 评论头像
-            avatar:'robohash',
-            meta:['nick','mail'],
+            avatar: 'robohash',
+            // 设置显示项
+            meta: ['nick', 'mail'],
             // 设置必填项
-            requiredFields:['nick','mail'],
-            // 设置Bilibili表情包地址
+            requiredFields: ['nick', 'mail'],
+            // 设置 Bilibili 表情包地址
             emojiCDN: '//i0.hdslb.com/bfs/emote/',
             // 表情title和图片映射
             emojiMaps: {
@@ -77,7 +74,8 @@
                 var footer = [
                     '<hr/>',
                     '<footer>',
-                    '<span><a href="https://github.com/WeiJinglun/myblogs">来自</a> 小狐狸个人学习笔记</span>',
+                    '<span><a href="https://github.com/WeiJinglun/myblogs">来自</a> 小狐狸个人学习笔记</span><br>',
+                    '<span><a href="https://docsify.js.org/">Powered by docsify</a></span>',
                     '</footer>'
                 ].join('')
 
