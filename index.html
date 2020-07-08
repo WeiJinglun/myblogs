@@ -31,11 +31,19 @@
             noData: '真的找不到了',
         },
         markdown: {},
+        // 上下章节
+        pagination: {
+            previousText: '上一章节',
+            nextText: '下一章节',
+            crossChapter: true,
+            crossChapterText: true
+        },
+        // 评论
         Valine: {
             appId: 'uguzIWfw592DW8Si6ISRJg8x-gzGzoHsz',
             appKey: 'zCH7o0WXtdvMJ5k5M7cmwWTG',
             // 评论框占位提示符
-            placeholder: '留下你的小灵感',
+            placeholder: '您的批评与鼓励是对我最大的帮助 ^_^',
             // 评论头像
             avatar: 'robohash',
             // 设置显示项
@@ -69,21 +77,6 @@
                 "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
             }
         },
-        plugins: [
-            function (hook) {
-                var footer = [
-                    '<hr/>',
-                    '<footer>',
-                    '<span><a href="https://github.com/WeiJinglun/myblogs">来自</a> 小狐狸个人学习笔记</span><br>',
-                    '<span><a href="https://docsify.js.org/">Powered by docsify</a></span>',
-                    '</footer>'
-                ].join('')
-
-                hook.afterEach(function (html) {
-                    return html + footer
-                })
-            }
-        ]
     }
 </script>
 <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
@@ -100,5 +93,7 @@
 <!-- 评论 -->
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 <script src="//unpkg.com/docsify-valine/dist/docsify-valine.min.js"></script>
+<!-- 上下章节 -->
+<script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
 </body>
 </html>
