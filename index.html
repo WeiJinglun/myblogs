@@ -23,6 +23,9 @@
         subMaxLevel: 4,
         loadSidebar: true,//侧边栏,_sidebar.md
         loadNavbar: true,// 导航栏,_navbar.md
+        alias: {
+            '/.*/_navbar.md': '/_sidebar.md'
+        },
         auto2top: true,// 切换页面后是否自动跳转到页面顶部
         coverpage: true,// 封面,_coverpage.md
         themeColor: '#2478e3',// 主题颜色
@@ -64,7 +67,6 @@
         repo: 'myblogs',
         owner: 'WeiJinglun',
         admin: ['WeiJinglun'],
-        id: decodeURI(window.location.href),
         // facebook-like distraction free mode
         distractionFreeMode: false
     })
