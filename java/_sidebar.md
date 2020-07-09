@@ -1,6 +1,6 @@
 - [返回首页](/README.md)
 - [JVM](/java/JVM/README.md)
-- [java 设计模式](/java/java设计模式/README.md)
+- [java 设计模式](/java/design-pattern/README.md)
 - java 基础
     - [ArrayList源码学习](/java/ArrayList源码学习.md)
     - [HashMap底层实现原理](/java/HashMap底层实现原理.md)
