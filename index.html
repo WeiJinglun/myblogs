@@ -64,7 +64,7 @@
         repo: 'myblogs',
         owner: 'WeiJinglun',
         admin: ['WeiJinglun'],
-        id: location.pathname,
+        id: decodeURI(window.location.pathname),
         // facebook-like distraction free mode
         distractionFreeMode: false
     })
