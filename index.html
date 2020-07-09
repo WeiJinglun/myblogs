@@ -16,6 +16,15 @@
 <body>
 <div id="app"></div>
 <script>
+    var gitalkConfig = {
+        clientID: 'f646e779968a82a16ab3',
+        clientSecret: 'e3535ab5b30ab1cfa5df8606e5dd4c91abcef675',
+        repo: 'myblogs',
+        owner: 'WeiJinglun',
+        admin: ["WeiJinglun"],
+        distractionFreeMode: false
+    };
+
     window.$docsify = {
         name: '目录',
         repo: '/README.md',
@@ -42,6 +51,35 @@
             crossChapter: true,
             crossChapterText: true
         },
+
+        plugins: [
+            function (hook, vm) {
+                hook.doneEach(function() {
+                    var label, domObj, main, divEle, gitalk;
+                    label = vm.route.path.split("/").pop();
+                    console.log(label)
+                    domObj = Docsify.dom;
+                    main = domObj.getNode("#main");
+
+                    Array.apply(
+                        null,
+                        document.querySelectorAll("div.gitalk-container")
+                    ).forEach(function(ele) {
+                        ele.remove();
+                    });
+
+                    divEle = domObj.create("div");
+                    divEle.id = "gitalk-container-" + label;
+                    divEle.className = "gitalk-container";
+                    divEle.style = "width: " + main.clientWidth + "px; margin: 0 auto 20px;";
+                    domObj.appendTo(domObj.find(".content"), divEle);
+                    gitalk = new Gitalk(
+                        Object.assign(gitalkConfig, { id: !label ? "home" : label })
+                    );
+                    gitalk.render("gitalk-container-" + label);
+                });
+            }
+        ]
     }
 </script>
 <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
@@ -58,19 +96,19 @@
 <!-- 上下章节 -->
 <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
 <!-- 评论 -->
-<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/gitalk.min.js"></script>
+<!--<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/gitalk.min.js"></script>-->
 <script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
-<script>
-    const gitalk = new Gitalk({
-        clientID: 'f646e779968a82a16ab3',
-        clientSecret: 'e3535ab5b30ab1cfa5df8606e5dd4c91abcef675',
-        repo: 'myblogs',
-        owner: 'WeiJinglun',
-        admin: ['WeiJinglun'],
-        // facebook-like distraction free mode
-        distractionFreeMode: false
-    })
-</script>
+<!--<script>-->
+<!--    const gitalk = new Gitalk({-->
+<!--        clientID: 'f646e779968a82a16ab3',-->
+<!--        clientSecret: 'e3535ab5b30ab1cfa5df8606e5dd4c91abcef675',-->
+<!--        repo: 'myblogs',-->
+<!--        owner: 'WeiJinglun',-->
+<!--        admin: ['WeiJinglun'],-->
+<!--        // facebook-like distraction free mode-->
+<!--        distractionFreeMode: false-->
+<!--    })-->
+<!--//  </script>-->
 
 </body>
 </html>
