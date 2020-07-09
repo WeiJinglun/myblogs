@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
 </head>
 <body>
 <div id="app"></div>
@@ -38,46 +39,6 @@
             crossChapter: true,
             crossChapterText: true
         },
-        // 评论
-        Valine: {
-            appId: 'uguzIWfw592DW8Si6ISRJg8x-gzGzoHsz',
-            appKey: 'zCH7o0WXtdvMJ5k5M7cmwWTG',
-            // 评论框占位提示符
-            placeholder: '您的批评与鼓励是对我最大的帮助 ^_^',
-            // 评论头像
-            avatar: 'robohash',
-            // 设置显示项
-            meta: ['nick', 'mail'],
-            // 设置必填项
-            requiredFields: ['nick', 'mail'],
-            // 设置 Bilibili 表情包地址
-            emojiCDN: '//i0.hdslb.com/bfs/emote/',
-            // 表情title和图片映射
-            emojiMaps: {
-                "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
-                "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
-                "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
-                "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
-                "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
-                "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
-                "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
-                "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
-                "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
-                "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
-                "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
-                "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
-                "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
-                "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
-                "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
-                "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
-                "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
-                "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
-                "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
-                "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
-                "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
-            }
-        },
-
     }
 </script>
 <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
@@ -91,16 +52,22 @@
 <script src="//unpkg.com/docsify-copy-code"></script>
 <!-- 支持Markdown中的TaLeX数学公式 -->
 <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-<!-- 评论 -->
-<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<script src="//unpkg.com/docsify-valine/dist/docsify-valine.min.js"></script>
 <!-- 上下章节 -->
 <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+<!-- 评论 -->
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/gitalk.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
 <script>
-    ((window.gitter = {}).chat = {}).options = {
-        room: 'weijinglun/community'
-    };
+    const gitalk = new Gitalk({
+        clientID: 'f646e779968a82a16ab3',
+        clientSecret: 'e3535ab5b30ab1cfa5df8606e5dd4c91abcef675',
+        repo: 'myblogs',
+        owner: 'WeiJinglun',
+        admin: ['WeiJinglun'],
+        // facebook-like distraction free mode
+        distractionFreeMode: false
+    })
 </script>
-<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
 </body>
 </html>
