@@ -768,6 +768,13 @@ int raxTryInsert(rax *rax, unsigned char *s, size_t len, void *data, void **old)
 真正实现函数 raxGenericInsert，该函数定义如下：
 
 ```c
-
+/* Insert the element 's' of size 'len', setting as auxiliary data
+ * the pointer 'data'. If the element is already present, the associated
+ * data is updated (only if 'overwrite' is set to 1), and 0 is returned,
+ * otherwise the element is inserted and 1 is returned. On out of memory the
+ * function returns 0 as well but sets errno to ENOMEM, otherwise errno will
+ * be set to 0.
+ */
+int raxGenericInsert(rax *rax, unsigned char *s, size_t len, void *data, void **old, int overwrite)
 ```
 
