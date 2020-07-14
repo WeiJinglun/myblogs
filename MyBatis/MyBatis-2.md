@@ -180,6 +180,27 @@ MyBatis 通过 XMLConfigBuilder 类完成 Configuration 对象的构建工作。
 在 XMLConfigBuilder 类的 parse() 方法中，首先调用 XPathParser 对象的 evalNode() 方法获取 XML 配置文件中 \<configuration> 节点对应的 XNode 对象，接着调用 parseConfiguration() 方法通过该 XNode 对象获取更多配置信息。下面是 XMLConfigBuilder 类中 parseConfiguration() 方法的实现：
 
 ```java
-
+  private void parseConfiguration(XNode root) {
+    try {
+      //issue #117 read properties first
+      propertiesElement(root.evalNode("properties"));
+      Properties settings = settingsAsProperties(root.evalNode("settings"));
+      loadCustomVfs(settings);
+      typeAliasesElement(root.evalNode("typeAliases"));
+      pluginElement(root.evalNode("plugins"));
+      objectFactoryElement(root.evalNode("objectFactory"));
+      objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
+      reflectorFactoryElement(root.evalNode("reflectorFactory"));
+      settingsElement(settings);
+      // read it after objectFactory and objectWrapperFactory issue #631
+      environmentsElement(root.evalNode("environments"));
+      databaseIdProviderElement(root.evalNode("databaseIdProvider"));
+      typeHandlerElement(root.evalNode("typeHandlers"));
+      mapperElement(root.evalNode("mappers"));
+    } catch (Exception e) {
+      throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);
+    }
+  }
 ```
 
+在 parseConfiguration() 方法中，对于<configuration>标签的子节点，都有一个单独的方法处理，例如使用propertiesElement()方法解析<properties>标签，使用pluginElement()方法解析<plugin>标签。MyBatis主配置文件中所有标签的用途如下。<properties>：用于配置属性信息，这些属性的值可以通过${...}方式引用。下面是<properties>标签的使用案例：
