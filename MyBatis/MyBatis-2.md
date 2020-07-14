@@ -203,4 +203,113 @@ MyBatis 通过 XMLConfigBuilder 类完成 Configuration 对象的构建工作。
   }
 ```
 
-在 parseConfiguration() 方法中，对于<configuration>标签的子节点，都有一个单独的方法处理，例如使用propertiesElement()方法解析<properties>标签，使用pluginElement()方法解析<plugin>标签。MyBatis主配置文件中所有标签的用途如下。<properties>：用于配置属性信息，这些属性的值可以通过${...}方式引用。下面是<properties>标签的使用案例：
+在 parseConfiguration() 方法中，对于 \<configuration> 标签的子节点，都有一个单独的方法处理，例如使用 propertiesElement() 方法解析 \<properties> 标签，使用 pluginElement() 方法解析 \<plugin> 标签。MyBatis 主配置文件中所有标签的用途如下。
+
+-   \<properties>：用于配置属性信息，这些属性的值可以通过 ${…} 方式引用。
+-   \<settings>：通过一些属性来控制 MyBatis 运行时的一些行为。例如，指定日志实现、默认的 Executor 类型等。
+
+```xml
+	<settings>
+		<setting name="useGeneratedKeys" value="true"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="logImpl" value="LOG4J"/>
+		<setting name="cacheEnabled" value="true"/>
+	</settings>
+```
+
+-   \<typeAliases>：用于配置类型别名，目的是为 Java 类型设置一个更短的名字。它存在的意义仅在于用来减少类完全限定名的冗余。
+-   \<plugins>：用于注册用户自定义的插件信息。
+-   \<objectFactory>：MyBatis 通过对象工厂（ObjectFactory）创建参数对象和结果集映射对象，默认的对象工厂需要做的仅仅是实例化目标类，要么通过默认构造方法，要么在参数映射存在的时候通过参数构造方法来实例化。
+-   \<objectWrapperFactory>：MyBatis 通过 ObjectWrapperFactory 创建 ObjectWrapper 对象，通过 ObjectWrapper 对象能够很方便地获取对象的属性、方法名等反射信息。
+-   \<reflectorFactory>：MyBatis 通过反射工厂（ReflectorFactory）创建描述 Java 类型反射信息的 Reflector 对象，通过 Reflector 对象能够很方便地获取 Class 对象的 Setter/Getter 方法、属性等信息。
+-   \<environments>：用于配置 MyBatis 数据连接相关的环境及事务管理器信息。通过该标签可以配置多个环境信息，然后指定具体使用哪个。
+-   \<databaseIdProvider>：MyBatis 能够根据不同的数据库厂商执行不同的 SQL 语句，该标签用于配置数据库厂商信息。
+-   \<typeHandlers>：用于注册用户自定义的类型处理器（TypeHandler）。
+-   \<mappers>：用于配置 MyBatis Mapper 信息。
+
+MyBatis 框架启动后，首先创建 Configuration 对象，然后解析所有配置信息，将解析后的配置信息存放在 Configuration 对象中。
+
+## 3. SqlSession实例创建过程
+
+MyBatis 中的 SqlSession 实例使用工厂模式创建，所以在创建 SqlSession 实例之前需要先创建 SqlSessionFactory 工厂对象，然后调用 SqlSessionFactory 对象的 openSession() 方法，代码如下：
+
+```java
+	@Test
+    public void testSqlSession() throws IOException {
+        // 获取Mybatis配置文件输入流
+        Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+        // 通过SqlSessionFactoryBuilder创建SqlSessionFactory实例
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        // 调用SqlSessionFactory的openSession（）方法，创建SqlSession实例
+        SqlSession session = sqlSessionFactory.openSession();
+    }
+```
+
+上面的代码中，为了创建 SqlSessionFactory 对象，首先创建了一个 SqlSessionFactoryBuilder 对象，然后以 MyBatis 主配置文件输入流作为参数，调用 SqlSessionFactoryBuilder 对象的 build() 方法。下面是 build() 方法的实现：
+
+```java
+public SqlSessionFactory build(Reader reader, String environment, Properties properties) {
+    try {
+      XMLConfigBuilder parser = new XMLConfigBuilder(reader, environment, properties);
+      return build(parser.parse());
+    } catch (Exception e) {
+      throw ExceptionFactory.wrapException("Error building SqlSession.", e);
+    } finally {
+      ErrorContext.instance().reset();
+      try {
+        reader.close();
+      } catch (IOException e) {
+        // Intentionally ignore. Prefer previous error.
+      }
+    }
+  }
+```
+
+在 build() 方法中，首先创建一个 XMLConfigBuilder 对象，然后调用 XMLConfigBuilder 对象的 parse() 方法对主配置文件进行解析，生成 Configuration 对象。以 Configuration 对象作为参数，调用重载的 build() 方法，该方法实现如下：
+
+```java
+public SqlSessionFactory build(Configuration config) {
+    return new DefaultSqlSessionFactory(config);
+  }
+```
+
+SqlSessionFactory 接口只有一个默认的实现，即 DefaultSqlSessionFactory。在上面的代码中，重载的 build() 方法中以 Configuration 对象作为参数，通过 new 关键字创建了一个 DefaultSqlSessionFactory 对象。
+
+DefaultSqlSessionFactory 类对 openSession() 方法的实现：
+
+```java
+  @Override
+  public SqlSession openSession() {
+    return openSessionFromDataSource(configuration.getDefaultExecutorType(), null, false);
+  }
+```
+
+如上面的代码所示，openSession() 方法中直接调用 openSessionFromDataSource() 方法创建 SqlSession 实例。下面是 openSessionFromDataSource() 方法的实现：
+
+```java
+private SqlSession openSessionFromDataSource(ExecutorType execType, TransactionIsolationLevel level, boolean autoCommit) {
+    Transaction tx = null;
+    try {
+      // 获取Mybatis主配置文件配置的环境信息
+      final Environment environment = configuration.getEnvironment();
+      // 创建事务管理器工厂
+      final TransactionFactory transactionFactory = getTransactionFactoryFromEnvironment(environment);
+      // 创建事务管理器
+      tx = transactionFactory.newTransaction(environment.getDataSource(), level, autoCommit);
+      // 根据Mybatis主配置文件中指定的Executor类型创建对应的Executor实例
+      final Executor executor = configuration.newExecutor(tx, execType);
+      // 创建DefaultSqlSession实例
+      return new DefaultSqlSession(configuration, executor, autoCommit);
+    } catch (Exception e) {
+      closeTransaction(tx); // may have fetched a connection so lets call close()
+      throw ExceptionFactory.wrapException("Error opening session.  Cause: " + e, e);
+    } finally {
+      ErrorContext.instance().reset();
+    }
+  }
+```
+
+上面的代码中，首先通过 Configuration 对象获取 MyBatis 主配置文件中通过 \<environment> 标签配置的环境信息，然后根据配置的事务管理器类型创建对应的事务管理器工厂。MyBatis 提供了两种事务管理器，分别为 JdbcTransaction 和 ManagedTransaction。其中，JdbcTransaction 是使用JDBC中的 Connection 对象实现事务管理的，而 ManagedTransaction 表示事务由外部容器管理。这两种事务管理器分别由对应的工厂类 JdbcTransactionFactory 和 ManagedTransactionFactory 创建。
+
+事务管理器对象创建完毕后，接着调用 Configuration 对象的 newExecutor() 方法，根据 MyBatis 主配置文件中指定的 Executor 类型创建对应的 Executor 对象，最后以 Executor 对象和 Configuration 对象作为参数，通过 Java 中的 new 关键字创建一个 DefaultSqlSession 对象。DefaultSqlSession 对象中持有 Executor 对象的引用，真正执行 SQL 操作的是 Executor 对象。
+
