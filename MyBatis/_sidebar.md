@@ -3,3 +3,4 @@
 - [SqlSession 的创建过程](/MyBatis/MyBatis-2.md)
 - [SqlSession 执行 Mapper 过程](/MyBatis/MyBatis-3.md)
 - [MyBatis 缓存](/MyBatis/MyBatis-4.md)
+- [动态 SQL 实现原理](/MyBatis/MyBatis-5.md)

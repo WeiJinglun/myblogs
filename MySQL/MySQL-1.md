@@ -2,7 +2,7 @@
 
 如下图所示，MySQL 的基本架构示意图，从中可以清楚地看到 SQL 语句在 MySQL 的各个功能模块中的执行过程：
 
-![MySQL-1-](img/MySQL-1-1.png)
+![MySQL-1-1](img/MySQL-1-1.png)
 
 MySQL 可以分为 Server 层和存储引擎层两部分。
 
