@@ -8,3 +8,5 @@
 - [4.索引(上)](/MySQL/MySQL-4.md)
 - [5.索引(下)](/MySQL/MySQL-5.md)
 - [6.全局锁和表锁](/MySQL/MySQL-6.md)
+- [7.行锁](/MySQL/MySQL-7.md)
+- [8.事务隔离](/MySQL/MySQL-8.md)
