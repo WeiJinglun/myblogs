@@ -5,6 +5,7 @@
     - [35.搜索插入位置](/LeetCode/35.md)
     - [39.组合总和](/LeetCode/39.md)
     - [56.合并区间](/LeetCode/56.md)
+    - [64.最小路径和](/LeetCode/64.md)
     - [75.颜色分类](/LeetCode/75.md)
     - [80.删除排序数组中的重复项II](/LeetCode/80.md)
     - [96.不同的二叉搜索树](/LeetCode/96.md)
