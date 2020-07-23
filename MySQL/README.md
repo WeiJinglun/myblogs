@@ -10,3 +10,5 @@
 - [6.全局锁和表锁](/MySQL/MySQL-6.md)
 - [7.行锁](/MySQL/MySQL-7.md)
 - [8.事务隔离](/MySQL/MySQL-8.md)
+- [9.普通索引和唯一索引](/MySQL/MySQL-9.md)
+- [10.索引统计的更新机制](/MySQL/MySQL-10.md)
