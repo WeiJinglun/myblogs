@@ -14,6 +14,7 @@
     - [113.路径总和II](/LeetCode/113.md)
     - [120.三角形最小路径和](/LeetCode/120.md)
     - [124.二叉树中的最大路径和](/LeetCode/124.md)
+    - [130.被围绕的区域](/LeetCode/130.md)
     - [167.两数之和II-输入有序数组](/LeetCode/167.md)
     - [169.多数元素](/LeetCode/169.md)
     - [189.旋转数组](/LeetCode/189.md)

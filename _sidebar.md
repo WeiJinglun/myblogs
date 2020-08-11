@@ -6,3 +6,6 @@
 - [LeetCode](/LeetCode/README.md)
 - [MyBatis 源码学习](/MyBatis/README.md)
 - [MySQL实战45讲](/MySQL/README.md)
+- [elasticsearch 学习](/ES/README.md)
+- [网络基础 学习](/network/README.md)
+- [杂项](/sundry/README.md)
