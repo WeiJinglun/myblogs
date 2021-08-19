@@ -1,6 +1,7 @@
 # JVM
 - JVM学习
     - [JVM 学习总结](/java/JVM/JVM学习总结.md)
+    - [JVM GC-基础](/java/JVM/JVM-GC-基础.md)
     - [JVM 介绍](/java/JVM/JVM-介绍.md)
     - [JVM 内存管理](/java/JVM/JVM-内存管理.md)
     - [JVM 类的加载机制](/java/JVM/JVM-类的加载机制.md)
